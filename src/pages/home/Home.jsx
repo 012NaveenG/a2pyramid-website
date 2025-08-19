@@ -1,8 +1,14 @@
+import Features from "./Features.jsx"
+import Hero from "./Hero.jsx"
+import Projects from "./Projects.jsx"
 
 const Home = () => {
   return (
-    <div>
-      <h1>Welcome to the home page</h1>
+    <div className="w-screen">
+      
+        <Hero />
+        <Features/>
+        <Projects/>
     </div>
   )
 }
