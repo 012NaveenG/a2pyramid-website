@@ -1,6 +1,8 @@
 import React from "react"
+import { useNavigate } from "react-router-dom"
 
 const Projects = () => {
+    const navigate = useNavigate()
     return (
         <section className="bg-white min-h-screen py-10">
             <div className="w-11/12 sm:w-3/4 mx-auto">
@@ -17,12 +19,14 @@ const Projects = () => {
                 </div>
 
                 {/* Project Section */}
-                <div className="flex flex-col md:flex-row justify-center gap-6 w-full mt-10">
+                <div
+                onClick={()=>navigate('/project/ai-smart-class')}
+                 className="flex flex-col md:flex-row p-2 rounded-md justify-center gap-6 w-full mt-10 hover:bg-gray-100 cursor-pointer transition-all duration-200 hover:scale-105">
                     {/* Left Image */}
                     <img
                         src="/ai_smart_class.jpg"
                         alt="AI Smart Class"
-                        className="w-full md:w-1/2 h-64 sm:h-96 object-cover rounded-md"
+                        className="w-full md:w-1/2 h-64 sm:h-88 object-cover rounded-md"
                     />
 
                     {/* Right Content */}
@@ -40,7 +44,7 @@ const Projects = () => {
                         </div>
 
                         {/* Heading */}
-                        <h1 className="text-2xl sm:text-4xl font-semibold mb-3">
+                        <h1 className="text-2xl sm:text-6xl font-semibold mb-3">
                             AI-Smart-Class
                         </h1>
 

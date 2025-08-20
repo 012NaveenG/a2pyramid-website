@@ -6,8 +6,8 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     const navLinks = [
+        { path: "/about", label: "About" },
         { path: "/services", label: "Services" },
-        { path: "/pricing", label: "Pricing" },
         { path: "/courses", label: "Courses" }
     ]
 

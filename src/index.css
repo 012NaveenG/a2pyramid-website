@@ -7,6 +7,24 @@
     font-optical-sizing: auto;
 }
 
-body{
+body {
     background-color: black;
+}
+
+
+.marquee-track {
+    animation-name: marquee-rtl;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+}
+
+@keyframes marquee-rtl {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
