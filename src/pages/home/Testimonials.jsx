@@ -1,3 +1,8 @@
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+
 const Testimonials = () => {
     const testimonials = [
         {
@@ -12,7 +17,7 @@ const Testimonials = () => {
             role: "Vice Principal, Mrs. Ritu Mehra",
             feedback:
                 "We were impressed with how quickly the platform was delivered and how well it integrates with our existing systems. Teachers find it easy to use and parents love the transparency.",
-            img: "https://i.pinimg.com/736x/a2/fa/c5/a2fac53dd00e999f40abee49bbc2e774.jpg",
+            img: "https://i.pinimg.com/1200x/a3/fd/3d/a3fd3dca4d88db0353ef7e76a8835e33.jpg",
         },
         {
             name: "St. Joseph's Academy",
@@ -30,32 +35,106 @@ const Testimonials = () => {
         },
     ];
 
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const testimonialRef = useRef();
+    const textRef = useRef();
+
+    // Typing effect
+    useGSAP(
+        () => {
+            if (!textRef.current) return;
+            const chars = textRef.current.querySelectorAll("span");
+            gsap.set(chars, { opacity: 0 });
+            gsap.fromTo(
+                chars,
+                {
+                    opacity: 0,
+                    y: -20,
+                    filter: "blur(5px)",
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    stagger: 0.01,
+                    ease: "power2.out",
+                }
+            );
+        },
+        { dependencies: [currentIndex] }
+    );
+
+    // Animate card on index change
+    useEffect(() => {
+        const el = testimonialRef.current;
+        if (!el) return;
+        gsap.fromTo(
+            el,
+            { opacity: 0, x: -50 },
+            { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
+        );
+    }, [currentIndex]);
+
+    const handlePrev = () => {
+        setCurrentIndex((prev) =>
+            prev === 0 ? testimonials.length - 1 : prev - 1
+        );
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prev) =>
+            prev === testimonials.length - 1 ? 0 : prev + 1
+        );
+    };
+
+    const t = testimonials[currentIndex];
+
     return (
-        <section className="w-full sm:w-3/4 mx-auto text-white min-h-screen py-20 px-4">
-            <h1 className="text-4xl sm:text-6xl font-bold text-center mb-12">
-                What Our Partner Schools Say
+        <section className="w-full max-w-6xl mx-auto text-white  min-h-[80vh] py-16 px-4">
+            <h1 className="text-2xl sm:text-4xl font-bold text-center mb-10">
+                What Our Partners Say!
             </h1>
 
-            <div className="grid gap-8 sm:grid-cols-2">
-                {testimonials.map((t, index) => (
-                    <div
-                        key={index}
-                        className="bg-gray-900 p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300"
+            <div
+                ref={testimonialRef}
+                className="sm:px-20 flex flex-col md:flex-row items-center gap-8 md:gap-12"
+            >
+                <img
+                    src={t.img}
+                    alt={t.name}
+                    className="h-64 w-full sm:h-72 sm:w-72 rounded-2xl object-cover  flex-shrink-0"
+                />
+
+                <div className="w-full md:w-1/2">
+                    <h1 className="font-bold text-xl sm:text-2xl">{t.name}</h1>
+                    <h2 className="text-neutral-400 text-sm sm:text-base">
+                        {t.role}
+                    </h2>
+
+                    <p
+                        ref={textRef}
+                        className="font-medium my-6 sm:my-8 text-sm sm:text-base leading-relaxed whitespace-pre-wrap"
                     >
-                        <div className="flex items-center gap-4 mb-4">
-                            <img
-                                src={t.img}
-                                alt={t.name}
-                                className="h-14 w-14 rounded-full object-cover border-2 border-violet-600"
-                            />
-                            <div>
-                                <h2 className="font-semibold text-lg">{t.name}</h2>
-                                <p className="text-gray-400 text-sm">{t.role}</p>
-                            </div>
-                        </div>
-                        <p className="text-gray-300 italic">“{t.feedback}”</p>
+                        {t.feedback.split("").map((char, i) => (
+                            <span key={i}>{char}</span>
+                        ))}
+                    </p>
+
+                    <div className="flex items-center gap-4 sm:gap-6 mt-8">
+                        <button
+                            onClick={handlePrev}
+                            className="h-8 w-8 sm:h-10 sm:w-10 bg-neutral-700 rounded-full flex items-center justify-center hover:rotate-12 transition-all duration-150 cursor-pointer"
+                        >
+                            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </button>
+                        <button
+                            onClick={handleNext}
+                            className="h-8 w-8 sm:h-10 sm:w-10 bg-neutral-700 rounded-full flex items-center justify-center hover:rotate-12 transition-all duration-150 cursor-pointer"
+                        >
+                            <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                        </button>
                     </div>
-                ))}
+                </div>
             </div>
         </section>
     );
