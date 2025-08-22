@@ -73,7 +73,7 @@ const Projects = () => {
 
 
                 <div
-                    onClick={() => navigate('/project/iot_with_ms_friday')}
+                    onClick={() => navigate('/project/iot_ms_friday')}
                     className="flex flex-col md:flex-row p-2 rounded-md justify-center gap-6 w-full mt-10 hover:bg-gray-100 cursor-pointer transition-all duration-200 hover:scale-105">
 
                     {/* Left Content */}
@@ -98,10 +98,7 @@ const Projects = () => {
 
                         {/* Description */}
                         <p className="text-slate-500 text-sm sm:text-base md:w-3/4">
-                            AI-Smart-Class is a cutting-edge platform designed for modern
-                            schools, integrating AI-driven educational tools with school
-                            management systems to transform how students learn and how teachers
-                            teach.
+                            Ms. Friday is an AI-powered talking and visual bot designed to support students emotionally and academically. She's not just a chatbot — she's a digital friend who talks, listens, understands emotions, and responds like a caring mentor.
                         </p>
 
                         {/* Tags */}
@@ -110,7 +107,7 @@ const Projects = () => {
                                 Conversational AI with Human-Like Responses
                             </span>
                             <span className="bg-slate-200 px-4 py-2 rounded-lg font-bold text-sm sm:text-base">
-                                  Academic Assistant
+                                Academic Assistant
                             </span>
                             <span className="bg-slate-200 px-4 py-2 rounded-lg font-bold text-sm sm:text-base">
                                 Multilingual Support

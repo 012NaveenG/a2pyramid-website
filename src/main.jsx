@@ -7,6 +7,7 @@ import HomeLayout from './layout/HomeLayout.jsx'
 import About from './pages/about/About.jsx'
 import Services from './pages/services/Services.jsx'
 import AIsmartClass from './pages/projects/ai_smart_class/AIsmartClass.jsx'
+import IoT_Ms_Friday from './pages/projects/iot_ms_friday/IoT_Ms_Friday.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/project/ai-smart-class",
         element: <AIsmartClass/>
+      },
+      {
+        path: "/project/iot_ms_friday",
+        element: <IoT_Ms_Friday/>
       },
     ]
   }

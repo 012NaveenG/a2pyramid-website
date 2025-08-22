@@ -57,7 +57,6 @@ const AllServices = () => {
         {services.map((s, idx) => {
           // pehle row (sirf first 4 items) ke liye bottom border lagana hai
           const isFirstRow = idx < 4;
-
           return (
             <div 
               key={idx}
