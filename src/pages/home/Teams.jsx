@@ -88,7 +88,7 @@ const Teams = () => {
                             <img
                                 src="/teams/aditya.avif"
                                 alt="Aditya Apurv"
-                                className="h-48 w-40 sm:h-56 sm:w-52 object-cover"
+                                className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
                             />
                             <div className="my-2">
                                 <h1 className="font-semibold">Aditya Apurv</h1>
@@ -103,7 +103,7 @@ const Teams = () => {
                             <img
                                 src="/teams/satish.avif"
                                 alt="Satish Kumar"
-                                className="h-48 w-40 sm:h-56 sm:w-52 object-cover"
+                                className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
                             />
                             <div className="my-2">
                                 <h1 className="font-semibold">Satish Kumar</h1>
@@ -118,7 +118,7 @@ const Teams = () => {
                             <img
                                 src="/teams/kesav.avif"
                                 alt="Kesav Nair"
-                                className="h-48 w-40 sm:h-56 sm:w-52 object-cover"
+                                className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
                             />
                             <div className="my-2">
                                 <h1 className="font-semibold">Keshav Nair</h1>
@@ -136,7 +136,7 @@ const Teams = () => {
                             <img
                                 src="/teams/ankit.avif"
                                 alt="Ankit Dwivedi"
-                                className="h-48 w-40 sm:h-56 sm:w-52 object-cover"
+                                className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
                             />
                             <div className="my-2">
                                 <h1 className="font-semibold">Ankit Dwivedi</h1>
@@ -153,7 +153,7 @@ const Teams = () => {
                             <img
                                 src="/teams/yuvraj.avif"
                                 alt="Yuvraj Maheshwari"
-                                className="h-48 w-40 sm:h-56 sm:w-52 object-cover"
+                                className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
                             />
                             <div className="my-2">
                                 <h1 className="font-semibold">Yuvraj Maheshwari</h1>
@@ -168,7 +168,7 @@ const Teams = () => {
                             <img
                                 src="/teams/sanya.jpg"
                                 alt="Sanya Gupta"
-                                className="h-48 w-40 sm:h-56 sm:w-52 object-cover"
+                                className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
                             />
                             <div className="my-2">
                                 <h1 className="font-semibold">Sanya Gupta</h1>

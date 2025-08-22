@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
 const Testimonials = () => {
     const testimonials = [
@@ -39,10 +39,14 @@ const Testimonials = () => {
     const testimonialRef = useRef();
     const textRef = useRef();
 
-    // Typing effect
+    // Typing effect fix with gsap.context
     useGSAP(
-        () => {
+        (context) => {
             if (!textRef.current) return;
+
+            // Kill any previous tweens inside this context
+            context.kill();
+
             const chars = textRef.current.querySelectorAll("span");
             gsap.set(chars, { opacity: 0 });
             gsap.fromTo(
@@ -61,19 +65,23 @@ const Testimonials = () => {
                 }
             );
         },
-        { dependencies: [currentIndex] }
+        { dependencies: [currentIndex], scope: textRef }
     );
 
-    // Animate card on index change
-    useEffect(() => {
-        const el = testimonialRef.current;
-        if (!el) return;
-        gsap.fromTo(
-            el,
-            { opacity: 0, x: -50 },
-            { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
-        );
-    }, [currentIndex]);
+    // Image + text container animation
+    useGSAP(
+        (context) => {
+            const el = testimonialRef.current;
+            if (!el) return;
+            context.kill(); // kill previous tweens
+            gsap.fromTo(
+                el,
+                { opacity: 0, x: -50 },
+                { opacity: 1, x: 0, duration: 1, ease: "power3.out" }
+            );
+        },
+        { dependencies: [currentIndex], scope: testimonialRef }
+    );
 
     const handlePrev = () => {
         setCurrentIndex((prev) =>
@@ -90,7 +98,7 @@ const Testimonials = () => {
     const t = testimonials[currentIndex];
 
     return (
-        <section className="w-full max-w-6xl mx-auto text-white  min-h-[80vh] py-16 px-4">
+        <section className="w-full max-w-6xl mx-auto text-white min-h-[80vh] py-16 px-4">
             <h1 className="text-2xl sm:text-4xl font-bold text-center mb-10">
                 What Our Partners Say!
             </h1>
@@ -102,7 +110,7 @@ const Testimonials = () => {
                 <img
                     src={t.img}
                     alt={t.name}
-                    className="h-64 w-full sm:h-72 sm:w-72 rounded-2xl object-cover  flex-shrink-0"
+                    className="h-64 w-full sm:h-72 sm:w-72 rounded-2xl object-cover flex-shrink-0"
                 />
 
                 <div className="w-full md:w-1/2">
