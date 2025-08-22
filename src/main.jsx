@@ -6,6 +6,7 @@ import Home from './pages/home/Home.jsx'
 import HomeLayout from './layout/HomeLayout.jsx'
 import About from './pages/about/About.jsx'
 import Services from './pages/services/Services.jsx'
+import AIsmartClass from './pages/projects/ai_smart_class/AIsmartClass.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/services",
         element: <Services />
+      },
+      {
+        path: "/project/ai-smart-class",
+        element: <AIsmartClass/>
       },
     ]
   }

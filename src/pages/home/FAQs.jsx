@@ -32,7 +32,7 @@ const FAQs = () => {
     };
 
     return (
-        <section className="w-full sm:w-3/4 mx-auto text-white min-h-screen py-10 px-4">
+        <section className="w-full sm:w-3/4 mx-auto text-white  py-10 px-4">
             <h1 className="text-3xl sm:text-5xl font-bold text-center mb-12">
                 Frequently Asked Questions
             </h1>
