@@ -8,7 +8,7 @@ const Navbar = () => {
     const navLinks = [
         { path: "/about", label: "About" },
         { path: "/services", label: "Services" },
-        { path: "/courses", label: "Courses" }
+        { path: "https://a2pyramid.com/#/edutech", label: "Courses" }
     ]
 
     return (
@@ -42,7 +42,8 @@ const Navbar = () => {
 
                 <div>
                     <Link
-                        to={"/contact-us"}
+                        to="https://docs.google.com/forms/d/e/1FAIpQLSdR1ApAqSMxeTHP2C_jn4scqTgLszo5gFV3Wjq4O1pfqpvuzA/viewform"
+                        target="_blank"
                         className="hidden sm:flex relative group  items-center justify-center gap-1"
                     >
                         Contact Us <CornerDownRight />
@@ -86,7 +87,8 @@ const Navbar = () => {
 
 
                 <Link
-                    to={"/contact-us"}
+                    to="https://docs.google.com/forms/d/e/1FAIpQLSdR1ApAqSMxeTHP2C_jn4scqTgLszo5gFV3Wjq4O1pfqpvuzA/viewform"
+                    target="_blank"
                     className=" relative group text-white text-5xl font-semibold"
                 >
                     Contact Us

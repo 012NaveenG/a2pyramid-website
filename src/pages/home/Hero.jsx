@@ -27,7 +27,8 @@ const Hero = () => {
                     code and ongoing support, we partner with you at every step.
                 </p>
                 <Link
-                    to={"/contact-us"}
+                    to="https://docs.google.com/forms/d/e/1FAIpQLSdR1ApAqSMxeTHP2C_jn4scqTgLszo5gFV3Wjq4O1pfqpvuzA/viewform"
+                    target="_blank"
                     className="px-5 py-3 w-full sm:w-42 rounded-md bg-violet-600 hover:bg-violet-700 transition-all duration-200 text-white font-semibold text-center"
                 >
                     Let's Build It

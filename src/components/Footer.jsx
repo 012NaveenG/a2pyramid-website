@@ -12,13 +12,13 @@ const Footer = () => {
           <div>
             <Link
               to={'/about'}
-              className="text-slate-300 "
+              className="text-slate-300  hover:text-slate-100 transition-all duration-200"
             >About</Link>
           </div>
           <div>
             <Link
               to={'/services'}
-              className="text-slate-300 "
+              className="text-slate-300  hover:text-slate-100 transition-all duration-200"
             >Services</Link>
           </div>
           <div>
@@ -35,19 +35,19 @@ const Footer = () => {
           <div>
             <Link
               to={'#'}
-              className="text-slate-300 "
+              className="text-slate-300 hover:text-slate-100 transition-all duration-200 "
             >Contact</Link>
           </div>
           <div>
             <Link
               to={'#'}
-              className="text-slate-300 "
+              className="text-slate-300 hover:text-slate-100 transition-all duration-200 "
             >Terms & Conditions</Link>
           </div>
           <div>
             <Link
               to={'#'}
-              className="text-slate-300 "
+              className="text-slate-300 hover:text-slate-100 transition-all duration-200 "
             >Privacy Policy</Link>
           </div>
         </div>
@@ -58,19 +58,19 @@ const Footer = () => {
           <div>
             <Link
               to={'#'}
-              className="text-slate-300 "
+              className="text-slate-300 hover:text-slate-100 transition-all duration-200 "
             >LinkedIn</Link>
           </div>
           <div>
             <Link
               to={'#'}
-              className="text-slate-300 "
+              className="text-slate-300 hover:text-slate-100 transition-all duration-200 "
             >Twiiter</Link>
           </div>
           <div>
             <Link
               to={'#'}
-              className="text-slate-300 "
+              className="text-slate-300 hover:text-slate-100 transition-all duration-200 "
             >Facebook</Link>
           </div>
           <p className="text-slate-300 ">+91 9472994483</p>

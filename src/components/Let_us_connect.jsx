@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const HowToConnect = () => {
+const Let_us_connect = () => {
     return (
         <>
-            <section className="w-full sm:w-3/4 mx-auto text-white   py-20 px-4">
+            <section className=" text-white   py-20 px-4 ">
                 <div className="flex flex-col gap-6 w-full">
                     {/* Top text */}
                     <h1 className="font-bold text-5xl sm:text-7xl md:text-9xl leading-tight">
@@ -28,17 +28,17 @@ const HowToConnect = () => {
                 </div>
 
             </section>
-            <div className='hidden sm:block lg:block my-20 border-t border-neutral-700 text-white py-10  '>
-                <div className='sm:w-3/4 mx-auto flex items-center justify-between'>
+            <div className=' hidden sm:block lg:block my-20 border-t border-neutral-700 text-white py-10  '>
+                <div className=' flex items-center justify-between'>
                     <p>Designed for user experience, built for results</p>
                     <p>From concept to launch—seamless execution</p>
                     <p>Reliable support & continuous improvements</p>
                 </div>
 
-                
+
             </div>
         </>
     )
 }
 
-export default HowToConnect
+export default Let_us_connect
