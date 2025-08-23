@@ -3,7 +3,7 @@ const Hero = () => {
         <section className="relative w-full h-[60vh] sm:h-[80vh] overflow-hidden">
             {/* Background Video */}
             <video
-                src="https://videos.pexels.com/video-files/6498238/6498238-uhd_2560_1440_25fps.mp4"
+                src="/projects/ai_smart_class.mp4"
                 autoPlay
                 loop
                 muted
