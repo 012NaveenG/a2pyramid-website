@@ -98,7 +98,7 @@ const Testimonials = () => {
     const t = testimonials[currentIndex];
 
     return (
-        <section className="w-full max-w-6xl mx-auto text-white min-h-[80vh] py-16 px-4">
+        <section className="w-full max-w-6xl mx-auto text-white py-16 px-4">
             <h1 className="text-2xl sm:text-4xl font-bold text-center mb-10">
                 What Our Partners Say!
             </h1>
@@ -110,7 +110,7 @@ const Testimonials = () => {
                 <img
                     src={t.img}
                     alt={t.name}
-                    className="h-64 w-full sm:h-72 sm:w-72 rounded-2xl object-cover flex-shrink-0"
+                    className="h-52 w-full sm:h-72 sm:w-72 rounded-2xl object-cover flex-shrink-0"
                 />
 
                 <div className="w-full md:w-1/2">
@@ -128,7 +128,7 @@ const Testimonials = () => {
                         ))}
                     </p>
 
-                    <div className="flex items-center gap-4 sm:gap-6 mt-8">
+                    <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 sm:mt-8">
                         <button
                             onClick={handlePrev}
                             className="h-8 w-8 sm:h-10 sm:w-10 bg-neutral-700 rounded-full flex items-center justify-center hover:rotate-12 transition-all duration-150 cursor-pointer"
