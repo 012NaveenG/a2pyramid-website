@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+"use client";
 
-gsap.registerPlugin(ScrollTrigger)
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const teamMembers = [
     { name: "Aditya Apurv", role: "CEO, A2 Pyramid", img: "/teams/aditya.avif" },
@@ -11,18 +13,19 @@ const teamMembers = [
     { name: "Ankit Dwivedi", role: "Full-Stack Developer", img: "/teams/ankit.avif" },
     { name: "Yuvraj Maheshwari", role: "ML / Web Dev", img: "/teams/yuvraj.avif" },
     { name: "Sanya Gupta", role: "ML Intern", img: "/teams/sanya.jpg" },
-]
+];
 
 const Teams = () => {
-    const sectionRef = useRef(null)
-    const leftCardsRef = useRef([])
-    const rightCardsRef = useRef([])
-    const [isDesktop, setIsDesktop] = useState(false)
+    const sectionRef = useRef(null);
+    const leftCardsRef = useRef([]);
+    const rightCardsRef = useRef([]);
+    const [isDesktop, setIsDesktop] = useState(false);
 
+    // 🔹 Desktop stacked animation
     useEffect(() => {
-        const handleResize = () => setIsDesktop(window.innerWidth >= 1024)
-        handleResize()
-        window.addEventListener("resize", handleResize)
+        const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+        handleResize();
+        window.addEventListener("resize", handleResize);
 
         if (isDesktop) {
             const ctx = gsap.context(() => {
@@ -34,7 +37,7 @@ const Teams = () => {
                         scrub: true,
                         pin: true,
                     },
-                })
+                });
 
                 // Left cards
                 tl.fromTo(
@@ -49,7 +52,7 @@ const Teams = () => {
                         duration: 1,
                         ease: "power3.out",
                     }
-                )
+                );
 
                 // Right cards
                 tl.fromTo(
@@ -65,14 +68,78 @@ const Teams = () => {
                         ease: "power3.out",
                     },
                     "+=0.5"
-                )
-            }, sectionRef)
+                );
+            }, sectionRef);
 
-            return () => ctx.revert()
+            return () => ctx.revert();
         }
 
-        return () => window.removeEventListener("resize", handleResize)
-    }, [isDesktop])
+        return () => window.removeEventListener("resize", handleResize);
+    }, [isDesktop]);
+
+    // 🔹 Mobile carousel animation (GSAP)
+    const [index, setIndex] = useState(0);
+    const cardsRef = useRef([]);
+
+    useEffect(() => {
+        if (!isDesktop) {
+            const interval = setInterval(() => {
+                setIndex((prev) => (prev + 1) % teamMembers.length);
+            }, 2000);
+
+            return () => clearInterval(interval);
+        }
+    }, [isDesktop]);
+
+    useEffect(() => {
+        if (!isDesktop) {
+            cardsRef.current.forEach((card, i) => {
+                if (!card) return;
+
+                const isActive = i === index;
+                const isPrev = i === (index - 1 + teamMembers.length) % teamMembers.length;
+                const isNext = i === (index + 1) % teamMembers.length;
+
+                if (isActive) {
+                    gsap.to(card, {
+                        x: 0,
+                        scale: 1,
+                        opacity: 1,
+                        zIndex: 3,
+                        duration: 0.6,
+                        ease: "power3.out",
+                    });
+                } else if (isPrev) {
+                    gsap.to(card, {
+                        x: -150,
+                        scale: 0.8,
+                        opacity: 0.6,
+                        zIndex: 2,
+                        duration: 0.6,
+                        ease: "power3.out",
+                    });
+                } else if (isNext) {
+                    gsap.to(card, {
+                        x: 150,
+                        scale: 0.8,
+                        opacity: 0.6,
+                        zIndex: 2,
+                        duration: 0.6,
+                        ease: "power3.out",
+                    });
+                } else {
+                    gsap.to(card, {
+                        x: 0,
+                        scale: 0.5,
+                        opacity: 0,
+                        zIndex: 0,
+                        duration: 0.6,
+                        ease: "power3.out",
+                    });
+                }
+            });
+        }
+    }, [index, isDesktop]);
 
     return (
         <section
@@ -80,31 +147,30 @@ const Teams = () => {
             className="w-full text-white py-16 px-4 bg-gradient-to-b from-teal-500 to-teal-700"
         >
             <div className="max-w-6xl mx-auto">
-
-
-                {/* Mobile layout → simple grid */}
+                {/* 🔹 Mobile layout → GSAP Carousel */}
                 {!isDesktop && (
                     <div>
-                        <div className="mb-10 text-center lg:text-left">
-                            <h1 className="font-bold text-3xl sm:text-5xl lg:text-6xl">
+                        <div className="mb-10 text-center">
+                            <h1 className="font-bold text-3xl sm:text-5xl">
                                 Meet Our Team That Delivers Your Results
                             </h1>
-                            <p className="font-semibold text-sm sm:text-base mt-4 lg:w-[70%] mx-auto lg:mx-0">
+                            <p className="font-semibold text-sm sm:text-base mt-4 lg:w-[70%] mx-auto">
                                 Our architects, designers, and engineers work together to turn your
                                 ideas into powerful software. From concept to ongoing support, we’re
                                 committed to your success.
                             </p>
                         </div>
-                        <div className="grid grid-cols-2 gap-6">
-                            {teamMembers.map((member, idx) => (
+                        <div className="relative flex items-center justify-center w-full   h-[220px] overflow-hidden">
+                            {teamMembers.map((member, i) => (
                                 <div
-                                    key={idx}
-                                    className="p-3 bg-gray-200 text-slate-950 rounded-lg text-center"
+                                    key={i}
+                                    ref={(el) => (cardsRef.current[i] = el)}
+                                    className="absolute w-48 p-3 bg-gray-200 text-slate-950 rounded-lg text-center shadow-lg"
                                 >
                                     <img
                                         src={member.img}
                                         alt={member.name}
-                                        className="h-36 w-32 sm:h-48 sm:w-40 object-cover mx-auto rounded"
+                                        className="h-36 w-full object-cover rounded"
                                     />
                                     <div className="mt-2">
                                         <h1 className="font-semibold text-sm sm:text-base">{member.name}</h1>
@@ -116,126 +182,68 @@ const Teams = () => {
                     </div>
                 )}
 
-                {/* Desktop layout → animated stacked cards */}
+                {/* 🔹 Desktop layout → stacked cards with scroll animation */}
                 {isDesktop && (
                     <div className="flex w-full justify-center gap-10 relative mt-12">
                         <div className="w-1/2 mb-10 text-center lg:text-left">
                             <h1 className="font-bold text-3xl sm:text-5xl lg:text-8xl">
                                 Meet Our Team That Delivers Your Results
                             </h1>
-                            <p className="font-semibold text-sm sm:text-base mt-4  mx-auto ">
+                            <p className="font-semibold text-sm sm:text-base mt-4 mx-auto">
                                 Our architects, designers, and engineers work together to turn your
                                 ideas into powerful software. From concept to ongoing support, we’re
                                 committed to your success.
                             </p>
                         </div>
-                        <div className="w-1/2 flex justify-center gap-10 relative  ">
 
-                            
+                        <div className="w-1/2 flex justify-center gap-10 relative">
                             {/* Left column of cards */}
-                            <div className="relative w-1/2 min-h-[450px] sm:min-h-[550px]">
-                                <div
-                                    ref={(el) => (leftCardsRef.current[0] = el)}
-                                    className="p-3 absolute left-2 sm:left-5 -rotate-12 bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105"
-                                >
-                                    <img
-                                        src="/teams/aditya.avif"
-                                        alt="Aditya Apurv"
-                                        className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
-                                    />
-                                    <div className="my-2">
-                                        <h1 className="font-semibold">Aditya Apurv</h1>
-                                        <p className="text-sm text-neutral-500">CEO, A2 Pyramid</p>
+                            <div className="relative w-1/2 min-h-[550px]">
+                                {teamMembers.slice(0, 3).map((m, i) => (
+                                    <div
+                                        key={i}
+                                        ref={(el) => (leftCardsRef.current[i] = el)}
+                                        className={`p-3 absolute left-2 sm:left-5 top-[${i * 140}px] -rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105`}
+                                    >
+                                        <img
+                                            src={m.img}
+                                            alt={m.name}
+                                            className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
+                                        />
+                                        <div className="my-2">
+                                            <h1 className="font-semibold">{m.name}</h1>
+                                            <p className="text-sm text-neutral-500">{m.role}</p>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div
-                                    ref={(el) => (leftCardsRef.current[1] = el)}
-                                    className="p-3 absolute left-2 sm:left-5 top-[120px] sm:top-[140px] -rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105"
-                                >
-                                    <img
-                                        src="/teams/satish.avif"
-                                        alt="Satish Kumar"
-                                        className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
-                                    />
-                                    <div className="my-2">
-                                        <h1 className="font-semibold">Satish Kumar</h1>
-                                        <p className="text-sm text-neutral-500">CTO, A2 Pyramid</p>
-                                    </div>
-                                </div>
-
-                                <div
-                                    ref={(el) => (leftCardsRef.current[2] = el)}
-                                    className="p-3 absolute left-2 sm:left-5 top-[240px] sm:top-[280px] -rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105"
-                                >
-                                    <img
-                                        src="/teams/kesav.avif"
-                                        alt="Kesav Nair"
-                                        className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
-                                    />
-                                    <div className="my-2">
-                                        <h1 className="font-semibold">Keshav Nair</h1>
-                                        <p className="text-sm text-neutral-500">COO, A2 Pyramid</p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
 
                             {/* Right column of cards */}
-                            <div className="relative w-1/2 min-h-[450px] sm:min-h-[550px]">
-                                <div
-                                    ref={(el) => (rightCardsRef.current[0] = el)}
-                                    className="p-3 absolute left-2 sm:left-5 top-[0px] rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105"
-                                >
-                                    <img
-                                        src="/teams/ankit.avif"
-                                        alt="Ankit Dwivedi"
-                                        className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
-                                    />
-                                    <div className="my-2">
-                                        <h1 className="font-semibold">Ankit Dwivedi</h1>
-                                        <p className="text-sm text-neutral-500">
-                                            Full-Stack Developer
-                                        </p>
+                            <div className="relative w-1/2 min-h-[550px]">
+                                {teamMembers.slice(3).map((m, i) => (
+                                    <div
+                                        key={i}
+                                        ref={(el) => (rightCardsRef.current[i] = el)}
+                                        className={`p-3 absolute left-2 sm:left-5 top-[${i * 140}px] rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105`}
+                                    >
+                                        <img
+                                            src={m.img}
+                                            alt={m.name}
+                                            className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
+                                        />
+                                        <div className="my-2">
+                                            <h1 className="font-semibold">{m.name}</h1>
+                                            <p className="text-sm text-neutral-500">{m.role}</p>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div
-                                    ref={(el) => (rightCardsRef.current[1] = el)}
-                                    className="p-3 absolute left-2 sm:left-5 top-[120px] sm:top-[140px] rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105"
-                                >
-                                    <img
-                                        src="/teams/yuvraj.avif"
-                                        alt="Yuvraj Maheshwari"
-                                        className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
-                                    />
-                                    <div className="my-2">
-                                        <h1 className="font-semibold">Yuvraj Maheshwari</h1>
-                                        <p className="text-sm text-neutral-500">ML / Web Dev</p>
-                                    </div>
-                                </div>
-
-                                <div
-                                    ref={(el) => (rightCardsRef.current[2] = el)}
-                                    className="p-3 absolute left-2 sm:left-5 top-[240px] sm:top-[280px] rotate-[8deg] bg-gray-200 text-slate-950 rounded hover:z-10 transition-all duration-300 hover:scale-105"
-                                >
-                                    <img
-                                        src="/teams/sanya.jpg"
-                                        alt="Sanya Gupta"
-                                        className="h-36 w-32 sm:h-56 sm:w-52 object-cover"
-                                    />
-                                    <div className="my-2">
-                                        <h1 className="font-semibold">Sanya Gupta</h1>
-                                        <p className="text-sm text-neutral-500">ML Intern</p>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
-
                         </div>
                     </div>
                 )}
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default Teams
+export default Teams;
