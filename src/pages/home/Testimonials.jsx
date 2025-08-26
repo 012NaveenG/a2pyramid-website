@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -36,10 +36,21 @@ const Testimonials = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const testimonialRef = useRef();
-  const textRef = useRef();
+  const testimonialRef = useRef(null);
+  const textRef = useRef(null);
 
-  // Typing effect (desktop ke liye)
+  // Auto-slide every 1.5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) =>
+        prev === testimonials.length - 1 ? 0 : prev + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  });
+
+  // Typing effect for text
   useGSAP(
     (context) => {
       if (!textRef.current) return;
@@ -61,7 +72,7 @@ const Testimonials = () => {
     { dependencies: [currentIndex], scope: textRef }
   );
 
-  // Image + text animation (desktop ke liye)
+  // Image + text container animation
   useGSAP(
     (context) => {
       const el = testimonialRef.current;
@@ -91,34 +102,15 @@ const Testimonials = () => {
   const t = testimonials[currentIndex];
 
   return (
-    <section className="w-full max-w-6xl mx-auto text-white py-16 px-4">
+    <section className="w-full max-w-4xl mx-auto text-white py-16 px-4">
       <h1 className="text-2xl sm:text-4xl font-bold text-center mb-10">
         What Our Partners Say!
       </h1>
 
-      {/* ✅ Mobile scrollable version */}
-      <div className="flex gap-6 overflow-x-auto scrollbar-hide md:hidden">
-        {testimonials.map((item, i) => (
-          <div
-            key={i}
-            className="flex-shrink-0 w-72 bg-neutral-950 rounded-2xl p-4"
-          >
-            <img
-              src={item.img}
-              alt={item.name}
-              className="h-40 w-full rounded-lg object-cover mb-4"
-            />
-            <h1 className="font-bold ">{item.name}</h1>
-            <h2 className="text-neutral-400 text-xs">{item.role}</h2>
-            <p className="text-xs mt-3">{item.feedback}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* ✅ Desktop carousel version */}
+      {/* ✅ Universal Carousel (works on all devices) */}
       <div
         ref={testimonialRef}
-        className="hidden md:flex sm:px-20 flex-col md:flex-row items-center gap-8 md:gap-12"
+        className="flex flex-col md:flex-row items-center gap-8 md:gap-12  rounded-2xl p-6"
       >
         <img
           src={t.img}
